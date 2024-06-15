@@ -1,0 +1,7 @@
+doing task in this mini project 
+-users write post
+-login and register
+-logout
+-post creation
+-post like
+-post delete
