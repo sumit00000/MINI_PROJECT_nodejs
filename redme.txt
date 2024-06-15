@@ -5,3 +5,12 @@ doing task in this mini project
 -post creation
 -post like
 -post delete
+
+
+#multer
+memory storage is basically is used to store in database
+dist storage is basicaly used to store in server
+in this project we use diskstorage
+// path.extname(file.originalname) this is in nodejs pkg is used to extract the extension 
+of original file name let suppose file name i sabcd.jpeg it extract jpeg  // app.js line 29
+const fn = bytes.toString("hex") // this is used to create random name of that file h

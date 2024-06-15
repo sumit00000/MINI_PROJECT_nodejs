@@ -7,6 +7,10 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { default: mongoose } = require('mongoose');
 const post = require('./models/post');
+const multer = require('multer');
+const crypto = require('crypto');
+const path = require('path');
+
 
 
 app.set("view engine", "ejs");
@@ -14,6 +18,20 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './public/images/uploads')
+    },
+    filename: function (req, file, cb) {
+        crypto.randomBytes(12, function (err, bytes) {
+            // console.log(bytes.toString("hex"));
+            const fn = bytes.toString("hex") + path.extname(file.originalname)  
+            cb(null, fn)
+        })
+    }
+})
+const upload = multer({ storage: storage})
 
 app.get('/', (req, res) => {
     // console.log("hey");
@@ -25,6 +43,15 @@ app.get('/', (req, res) => {
 app.get("/login", (req, res) => {
     res.render("login")
 
+});
+
+app.get("/test", (req, res) => {
+    // console.log(req.file);                    //req.body have text files and req.file has files data
+    res.render("test");                  
+});
+
+app.post("/upload", upload.single("image"), (req, res) => {
+    console.log(req.file);
 });
 
 app.get("/profile", isLoggedIn, async (req, res) => {
